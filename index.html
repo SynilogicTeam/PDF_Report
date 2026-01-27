@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrology PDF Report Generator</title>
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/ui-lightness/jquery-ui.css">
+    
+    <!-- jQuery UI JS -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    
+    <!-- Timepicker Addon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Places API -->
+    <!-- Apply Your Google Place Api Key visit https://console.cloud.google.com/auth/clients -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK07TpKO63SXH-QzaJP5iCU7jzJgtCL2s&libraries=places"></script>
+    
+    <!-- <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .pac-container {
+            z-index: 10000 !important;
+        }
+        
+        .ui-datepicker {
+            z-index: 10001 !important;
+        }
+        
+        .ui-timepicker-wrapper {
+            z-index: 10002 !important;
+        }
+        
+        .matching-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .loader {
+            text-align: center;
+            color: #667eea;
+            font-weight: 500;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            background: #218838;
+        }
+        
+        .pdf-url {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            word-break: break-all;
+            font-size: 12px;
+            color: #495057;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style> -->
+</head>
+<body>
+    <div class="container">
+        <h1>Astrology PDF Report Generator</h1>
+        
+        <form id="astrologyForm">
+            <!-- Report Selection -->
+            <div class="form-group">
+                <label for="reportType">Select PDF Report <span class="required">*</span></label>
+                <select id="reportType" name="reportType" required>
+                    <option value="">Select Report</option>
+                </select>
+            </div>
+            
+            <!-- Normal Form Fields (shown by default) -->
+            <div id="normalForm">
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name">
+                </div>
+                
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label for="dob">Date of Birth (DD/MM/YYYY) <span class="required">*</span></label>
+                    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" >
+                </div>
+                
+                <!-- Time of Birth -->
+                <div class="form-group">
+                    <label for="tob">Time of Birth (HH:MM) <span class="required">*</span></label>
+                    <input type="text" id="tob" name="tob" placeholder="HH:MM" >
+                </div>
+                
+                <!-- Place of Birth (Google Places Autocomplete) -->
+                <div class="form-group">
+                    <label for="place">Place of Birth <span class="required">*</span></label>
+                    <input type="text" id="place" name="place" placeholder="Start typing place name..." >
+                </div>
+                
+                <!-- Hidden fields for Latitude and Longitude -->
+                <input type="hidden" id="lat" name="lat">
+                <input type="hidden" id="lon" name="lon">
+                <input type="hidden" id="tz" name="tz" value="5.5">
+                
+                <!-- Language -->
+                <div class="form-group">
+                    <label for="lang">Language <span class="required">*</span></label>
+                    <select id="lang" name="lang" required>
+                        <option value="">Select Language</option>
+                        <option value="en" selected>English</option>
+                        <option value="hi">Hindi</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Matching Form Fields (hidden by default) -->
+            <div id="matchingForm" style="display: none;">
+                <!-- Boy Details -->
+                <div class="matching-section">
+                    <div class="section-title">Boy Details</div>
+                    
+                    <div class="form-group">
+                        <label for="boy_name">Boy Name <span class="required">*</span></label>
+                        <input type="text" id="boy_name" name="boy_name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="boy_dob">Boy Date of Birth (DD/MM/YYYY) <span class="required">*</span></label>
+                        <input type="text" id="boy_dob" name="boy_dob" placeholder="DD/MM/YYYY">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="boy_tob">Boy Time of Birth (HH:MM) <span class="required">*</span></label>
+                        <input type="text" id="boy_tob" name="boy_tob" placeholder="HH:MM">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="boy_place">Boy Place of Birth <span class="required">*</span></label>
+                        <input type="text" id="boy_place" name="boy_place" placeholder="Start typing place name...">
+                    </div>
+                    
+                    <!-- Hidden fields for Boy Latitude and Longitude -->
+                    <input type="hidden" id="boy_lat" name="boy_lat">
+                    <input type="hidden" id="boy_lon" name="boy_lon">
+                    <input type="hidden" id="boy_tz" name="boy_tz" value="5.5">
+                </div>
+                
+                <!-- Girl Details -->
+                <div class="matching-section">
+                    <div class="section-title">Girl Details</div>
+                    
+                    <div class="form-group">
+                        <label for="girl_name">Girl Name <span class="required">*</span></label>
+                        <input type="text" id="girl_name" name="girl_name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="girl_dob">Girl Date of Birth (DD/MM/YYYY) <span class="required">*</span></label>
+                        <input type="text" id="girl_dob" name="girl_dob" placeholder="DD/MM/YYYY">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="girl_tob">Girl Time of Birth (HH:MM) <span class="required">*</span></label>
+                        <input type="text" id="girl_tob" name="girl_tob" placeholder="HH:MM">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="girl_place">Girl Place of Birth <span class="required">*</span></label>
+                        <input type="text" id="girl_place" name="girl_place" placeholder="Start typing place name...">
+                    </div>
+                    
+                    <!-- Hidden fields for Girl Latitude and Longitude -->
+                    <input type="hidden" id="girl_lat" name="girl_lat">
+                    <input type="hidden" id="girl_lon" name="girl_lon">
+                    <input type="hidden" id="girl_tz" name="girl_tz" value="5.5">
+                </div>
+                
+                <!-- Language for Matching -->
+                <div class="form-group">
+                    <label for="matching_lang">Language <span class="required">*</span></label>
+                    <select id="matching_lang" name="matching_lang">
+                        <option value="">Select Language</option>
+                        <option value="en" selected>English</option>
+                        <option value="hi">Hindi</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Company Details (Optional) -->
+            <div class="form-group">
+                <label for="company_name">Company Name (Optional)</label>
+                <input type="text" id="company_name" name="company_name" value="GRAHASTITHI ASTROLOGY CONSULTATIONS">
+            </div>
+            
+            <div class="form-group">
+                <label for="company_address">Company Address (Optional)</label>
+                <input type="text" id="company_address" name="company_address" value="Kudavelly, Akberpet Bhoompally, Siddipet, Telangana">
+            </div>
+            
+            <div class="form-group">
+                <label for="company_email">Company Email (Optional)</label>
+                <input type="email" id="company_email" name="company_email" value="contact@jyotishamastroapi.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="company_phone">Company Phone (Optional)</label>
+                <input type="text" id="company_phone" name="company_phone" value="9573854546">
+            </div>
+            
+            <div class="form-group">
+                <label for="company_website">Company Website (Optional)</label>
+                <input type="text" id="company_website" name="company_website" value="https://jyotishamastroapi.com/">
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn">Generate PDF Report</button>
+            
+            <!-- Loader -->
+            <div class="loader" id="loader">Generating PDF...</div>
+        </form>
+        
+        <!-- Message Display Area -->
+        <div class="message" id="message"></div>
+    </div>
+</body>
+<script src="pdfKundli.js"></script>
+</html>
